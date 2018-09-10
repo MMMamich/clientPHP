@@ -24,7 +24,9 @@
     //Methods to be called upon, params ar as follow: $table, $id, $name, $frgnKey=null
     $object->insert();
     $object->update();
-    $object->delete();
+    $object->deleteClient();
+    $object->deleteSection();
+    $object->deleteLinks();
     ?>
   
 </body>

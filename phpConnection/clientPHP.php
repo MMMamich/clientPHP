@@ -32,7 +32,7 @@
                  
              //sql tables - chose not to make any id's auto increment due to add functionality
              $client = "DROP TABLE IF EXISTS Client; CREATE TABLE Client (
-             id INT UNSIGNED AUTO_INCREMENT, 
+             id INT(6) UNSIGNED AUTO_INCREMENT, 
              name VARCHAR(30) NOT NULL,
              PRIMARY KEY(id)
              );";
@@ -41,6 +41,7 @@
              id INT(6) UNSIGNED, 
              client_id INT(6) UNSIGNED,
              FOREIGN KEY (client_id) REFERENCES Client(id),
+             PRIMARY KEY(id),
              name VARCHAR(30) NOT NULL
              );";
 
@@ -48,6 +49,7 @@
              id INT(6) UNSIGNED, 
              section_id INT(6) UNSIGNED,
              FOREIGN KEY(section_id) REFERENCES Sections(id),
+             PRIMARY KEY(id),
              name VARCHAR(512) NOT NULL);";
             
              $pdo->exec($client);
@@ -81,7 +83,25 @@
                  echo ' updated';
          }
          
-          public function delete($table, $id, $name, $frgnKey=null){
+          public function deleteClient($table, $id, $name){
+                
+                 $dsn = "mysql:host=".$this->serverName.";dbName=".$this->dbName.";charset=".$this->charset;
+                 $pdo = new PDO($dsn, $this->username, $this->password);
+                 $destroy = "DELETE FROM $table WHERE id=$id)";
+                 $pdo->exec($destroy);
+                 echo ' deleted';
+         }
+         
+         public function deleteSection($table, $id, $name, $frgnKey=null){
+                
+                 $dsn = "mysql:host=".$this->serverName.";dbName=".$this->dbName.";charset=".$this->charset;
+                 $pdo = new PDO($dsn, $this->username, $this->password);
+                 $destroy = "DELETE FROM $table WHERE $frgnKey=client_id OR section_id)";
+                 $pdo->exec($destroy);
+                 echo ' deleted';
+         }
+         
+         public function deleteLink($table, $id, $name, $frgnKey=null){
                 
                  $dsn = "mysql:host=".$this->serverName.";dbName=".$this->dbName.";charset=".$this->charset;
                  $pdo = new PDO($dsn, $this->username, $this->password);
